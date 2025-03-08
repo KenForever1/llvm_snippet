@@ -1,0 +1,5 @@
+a.out
+test
+*.so
+*.ll
+.DS_Store

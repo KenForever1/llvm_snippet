@@ -1,0 +1,74 @@
+----------------------------------------------------------------------
+Counting and printing basic blocks in the function testFunction
+
+  %2 = alloca i32, align 4
+  store i32 %0, ptr %2, align 4
+  %3 = load i32, ptr %2, align 4
+  %4 = icmp eq i32 %3, 1337
+  br i1 %4, label %5, label %7
+
+
+5:                                                ; preds = %1
+  %6 = call i32 @puts(ptr noundef @.str)
+  br label %9
+
+
+7:                                                ; preds = %1
+  %8 = call i32 @puts(ptr noundef @.str.1)
+  br label %9
+
+
+9:                                                ; preds = %7, %5
+  ret void
+
+Number of basic blocks: 4
+----------------------------------------------------------------------
+Counting and printing basic blocks in the function someFunction
+
+  %1 = alloca i32, align 4
+  store i32 0, ptr %1, align 4
+  br label %2
+
+
+2:                                                ; preds = %8, %0
+  %3 = load i32, ptr %1, align 4
+  %4 = icmp slt i32 %3, 10
+  br i1 %4, label %5, label %11
+
+
+5:                                                ; preds = %2
+  %6 = load i32, ptr %1, align 4
+  %7 = call i32 (ptr, ...) @printf(ptr noundef @.str.2, i32 noundef %6)
+  br label %8
+
+
+8:                                                ; preds = %5
+  %9 = load i32, ptr %1, align 4
+  %10 = add nsw i32 %9, 1
+  store i32 %10, ptr %1, align 4
+  br label %2, !llvm.loop !6
+
+
+11:                                               ; preds = %2
+  ret void
+
+Number of basic blocks: 5
+----------------------------------------------------------------------
+Counting and printing basic blocks in the function anotherFunction
+
+  br label %1
+
+
+1:                                                ; preds = %1, %0
+  %2 = call i32 @puts(ptr noundef @.str.3)
+  br label %1
+
+Number of basic blocks: 2
+----------------------------------------------------------------------
+Counting and printing basic blocks in the function main
+
+  %1 = alloca i32, align 4
+  store i32 0, ptr %1, align 4
+  ret i32 0
+
+Number of basic blocks: 1
