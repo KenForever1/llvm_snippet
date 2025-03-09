@@ -3,3 +3,6 @@ test
 *.so
 *.ll
 .DS_Store
+includes
+build
+*.dot

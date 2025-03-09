@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/includes/llvm-16",
+                "${workspaceFolder}/includes/llvm-c-16"
+            ]
+        }
+    ],
+    "version": 4
+}

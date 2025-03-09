@@ -1,0 +1,47 @@
+----------------------------------------------------------------
+Running DFS for the function testFunction
+
+  %1 = alloca i32, align 4
+  store i32 0, ptr %1, align 4
+  br label %2
+
+2:                                                ; preds = %8, %0
+  %3 = load i32, ptr %1, align 4
+  %4 = icmp slt i32 %3, 10
+  br i1 %4, label %5, label %11
+
+5:                                                ; preds = %2
+  %6 = load i32, ptr %1, align 4
+  %7 = call i32 (ptr, ...) @printf(ptr noundef @.str, i32 noundef %6)
+  br label %8
+
+8:                                                ; preds = %5
+  %9 = load i32, ptr %1, align 4
+  %10 = add nsw i32 %9, 1
+  store i32 %10, ptr %1, align 4
+  br label %2, !llvm.loop !6
+
+11:                                               ; preds = %2
+  ret i32 1337
+----------------------------------------------------------------
+Running DFS for the function main
+
+  %1 = alloca i32, align 4
+  %2 = alloca i32, align 4
+  store i32 0, ptr %1, align 4
+  %3 = call i32 @testFunction()
+  store i32 %3, ptr %2, align 4
+  %4 = load i32, ptr %2, align 4
+  %5 = icmp sgt i32 %4, 1000
+  br i1 %5, label %6, label %8
+
+6:                                                ; preds = %0
+  %7 = call i32 @puts(ptr noundef @.str.1)
+  br label %10
+
+10:                                               ; preds = %8, %6
+  ret i32 0
+
+8:                                                ; preds = %0
+  %9 = call i32 @puts(ptr noundef @.str.2)
+  br label %10
